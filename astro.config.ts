@@ -17,13 +17,14 @@ const cnamePath = path.resolve('./public/CNAME');
 const cname = fs.existsSync(cnamePath)
 	? fs.readFileSync(cnamePath, 'utf8').trim()
 	: '';
+const hasCustomDomain = Boolean(process.env.SITE_URL || cname);
 
 const site =
 	process.env.SITE_URL ??
 	(cname ? `https://${cname}` : undefined) ??
 	(owner ? `https://${owner}.github.io` : 'https://example.com');
 const base =
-	!process.env.SITE_URL && repository && !isUserSite
+	!hasCustomDomain && repository && !isUserSite
 		? `/${repository}`
 		: undefined;
 
