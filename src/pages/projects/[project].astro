@@ -7,6 +7,7 @@ import type { GetStaticPaths } from "astro";
 import Card from "../../components/Card.astro";
 import Icon from "../../components/Icon.astro";
 import ImageGlow from "../../components/ImageGlow.astro";
+import PhotoCredit from "../../components/PhotoCredit.astro";
 import { withBase } from "../../lib/base";
 import Layout from "../../layouts/Layout.astro";
 
@@ -65,22 +66,23 @@ const { Content } = await render(project);
 	<article slot="right" data-pagefind-body>
 		<Card>
 			<div class="article-header" id="_top" data-pagefind-ignore>
-				{
-					project.data.image && (
+				<div class="article-cover-card">
+					{
+						project.data.image && (
 						<ImageGlow
 							quality={100}
 							class="article-image"
 							src={project.data.image}
-							alt={project.data.title}
+							alt={project.data.imageAlt ?? project.data.title}
 						/>
-					)
-				}
-				<div class="header">
-					<div>
+						)
+					}
+					<div class="article-cover-copy">
 						<h1 class="no-mt article-h1">{project.data.title}</h1>
-					</div>
-					<div class="article-info">
-						<span>{project.data.date.toLocaleDateString()}</span>
+						<div class="article-info">
+							<span>{project.data.date.toLocaleDateString()}</span>
+						</div>
+						<PhotoCredit credit={project.data.imageCredit} class="article-credit" />
 					</div>
 				</div>
 			</div>

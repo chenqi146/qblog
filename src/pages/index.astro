@@ -120,6 +120,8 @@ const { Content: About } = await render(about!);
 								description={post.data.description}
 								date={post.data.createdAt}
 								image={post.data.image}
+								imageAlt={post.data.imageAlt}
+								imageCredit={post.data.imageCredit}
 							/>
 						))
 				}
@@ -148,6 +150,8 @@ const { Content: About } = await render(about!);
 								description={project.data.description}
 								date={project.data.date}
 								image={project.data.image}
+								imageAlt={project.data.imageAlt}
+								imageCredit={project.data.imageCredit}
 							/>
 						))
 				}

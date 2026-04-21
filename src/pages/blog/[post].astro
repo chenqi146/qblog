@@ -7,6 +7,7 @@ import { giscus } from "spectre:globals";
 import type { GetStaticPaths } from "astro";
 import Card from "../../components/Card.astro";
 import ImageGlow from "../../components/ImageGlow.astro";
+import PhotoCredit from "../../components/PhotoCredit.astro";
 import { withBase } from "../../lib/base";
 import Layout from "../../layouts/Layout.astro";
 
@@ -81,22 +82,23 @@ const { Content, headings } = await render(post);
 	<article slot="right" data-pagefind-body>
 		<Card>
 			<div class="article-header" id="_top" data-pagefind-ignore>
-				<ImageGlow
-					quality={100}
-					class="article-image"
-					src={post.data.image}
-					alt={post.data.title}
-				/>
-				<div class="header">
-					<div>
+				<div class="article-cover-card">
+					<ImageGlow
+						quality={100}
+						class="article-image"
+						src={post.data.image}
+						alt={post.data.imageAlt ?? post.data.title}
+					/>
+					<div class="article-cover-copy">
 						<h1 class="no-mt article-h1">{post.data.title}</h1>
-					</div>
-					<div class="article-info">
-						<span>{post.data.createdAt.toLocaleDateString()}</span>
-						<span>/</span>
-						<span>{timeToRead(post)} 分钟阅读</span>
-						<span>/</span>
-						<span>标签: {post.data.tags.map((tag) => tag.id).join(", ")}</span>
+						<div class="article-info">
+							<span>{post.data.createdAt.toLocaleDateString()}</span>
+							<span>/</span>
+							<span>{timeToRead(post)} 分钟阅读</span>
+							<span>/</span>
+							<span>标签: {post.data.tags.map((tag) => tag.id).join(", ")}</span>
+						</div>
+						<PhotoCredit credit={post.data.imageCredit} class="article-credit" />
 					</div>
 				</div>
 			</div>

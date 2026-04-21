@@ -8,6 +8,7 @@
 		"preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
 		"check": "ASTRO_TELEMETRY_DISABLED=1 astro check",
 		"import:hexo": "node scripts/import-hexo-posts.mjs ../blog",
+		"images:unsplash": "node scripts/fetch-unsplash-images.mjs",
 		"astro": "astro",
 		"postbuild": "pagefind --site dist",
 		"lint": "biome check .",

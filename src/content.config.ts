@@ -54,6 +54,14 @@ const tags = defineCollection({
 	}),
 });
 
+const imageCreditSchema = z.object({
+	provider: z.literal("unsplash"),
+	photographer: z.string(),
+	username: z.string(),
+	profileUrl: z.string().url(),
+	photoUrl: z.string().url(),
+});
+
 const posts = defineCollection({
 	loader: glob({ base: "src/content/posts", pattern: "**/*.{md,mdx}" }),
 	schema: ({ image }) =>
@@ -65,6 +73,8 @@ const posts = defineCollection({
 			tags: z.array(reference("tags")),
 			draft: z.boolean().optional().default(false),
 			image: image(),
+			imageAlt: z.string().optional(),
+			imageCredit: imageCreditSchema.optional(),
 		}),
 });
 
@@ -76,6 +86,8 @@ const projects = defineCollection({
 			description: z.string(),
 			date: z.coerce.date(),
 			image: image(),
+			imageAlt: z.string().optional(),
+			imageCredit: imageCreditSchema.optional(),
 			link: z.string().url().optional(),
 			info: z.array(
 				z.object({

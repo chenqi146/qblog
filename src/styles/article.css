@@ -84,71 +84,61 @@ ol li a.active {
 }
 
 .article-header {
-	position: relative;
 	width: 100%;
-	height: fit-content;
 	scroll-margin-top: 2rem;
 }
 
-.header {
+.article-cover-card {
 	display: flex;
 	flex-direction: column;
-	gap: 0.5rem;
-	position: absolute;
-	bottom: 1.5rem;
-	left: 1rem;
-	max-width: calc(100% - 3rem);
-	z-index: 2;
+	border: 1px solid #293533;
+	background:
+		linear-gradient(180deg, rgba(12, 18, 17, 0.94), rgba(8, 12, 12, 0.98));
+	box-shadow:
+		0 20px 52px rgba(0, 0, 0, 0.24),
+		inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+}
+
+.article-cover-copy {
+	display: flex;
+	flex-direction: column;
+	gap: 0.65rem;
+	padding: 1rem 1.1rem 1rem;
+	border-top: 1px solid rgba(157, 248, 201, 0.1);
 }
 
 .article-h1 {
 	margin-bottom: 0;
 	font-size: 2em;
-	background: #ffffff;
-	padding: 0.25rem 0.675rem;
-	box-decoration-break: clone;
-	-webkit-box-decoration-break: clone;
-	position: relative;
-	line-height: 1.2;
-	display: inline;
-	color: #000000;
+	line-height: 1.15;
+	display: block;
+	color: #ffffff;
 }
 
 .article-info {
 	display: flex;
 	flex-direction: row;
+	flex-wrap: wrap;
 	gap: 0.5rem;
 	font-family: "Geist Mono", "Courier New", Courier, monospace;
-	background: #ffffff;
-	color: #000000;
-	box-decoration-break: clone;
-	-webkit-box-decoration-break: clone;
-	padding: 0 0.75rem;
-	width: fit-content;
+	color: rgba(255, 255, 255, 0.82);
+}
+
+.article-credit {
+	color: rgba(255, 255, 255, 0.68);
+}
+
+.article-credit a {
+	color: #9df8c9;
 }
 
 @media screen and (max-width: 640px) {
-	.header {
-		position: relative;
-		bottom: 0;
-		left: 0;
-		width: fit-content;
-		max-width: none;
-		margin-top: 1rem;
-	}
-
-	.article-h1 {
-		display: inline;
-		background-color: transparent;
-		padding: 0;
-		color: white;
+	.article-cover-copy {
+		padding: 0.85rem 0.9rem 0.9rem;
 	}
 
 	.article-info {
-		display: block;
-		background-color: transparent;
-		padding: 0;
-		color: white;
+		gap: 0.35rem;
 	}
 }
 
@@ -161,7 +151,7 @@ code:not(.astro-code code) {
 .article-image {
 	width: 100%;
 	height: auto;
-	z-index: 1;
+	display: block;
 }
 
 .end-of-article {

@@ -45,6 +45,47 @@ GitHub Pages 部署：
 - 它不是服务端鉴权，不能提供真正的安全保护
 - 如果不配置 `SITE_PASSWORD`，站点会退回默认密码 `please-change-me`
 
+## Unsplash 真图封面
+
+项目现在支持把文章 / 项目封面批量替换成 Unsplash 真图，但抓图发生在本地脚本执行阶段，最后会下载到仓库里的本地静态资源，不会在 GitHub Pages 运行时调用 Unsplash API。
+
+先在 `.env` 里补上：
+
+```text
+UNSPLASH_ACCESS_KEY=你的AccessKey
+```
+
+然后执行：
+
+```bash
+npm run images:unsplash
+```
+
+如果你用的是 Unsplash demo 配额，建议分批跑：
+
+```bash
+npm run images:unsplash -- --limit=20
+```
+
+脚本会：
+
+- 根据文章 slug / tag 自动挑选查询词
+- 从 Unsplash `random` 接口抓取横版图片
+- 下载到 `src/content/assets/unsplash/`
+- 自动回写文章 frontmatter 的 `image`、`imageAlt`、`imageCredit`
+
+这样做的好处是：
+
+- 不暴露 Access Key
+- 发布后的站点不依赖运行时第三方 API
+- 封面图稳定，不会每次刷新随机变化
+
+注意：
+
+- Unsplash demo 应用通常有每小时 50 次 API 请求限制
+- 当前脚本每张图会消耗 2 次请求：1 次取随机图，1 次下载统计
+- 所以一次建议最多处理 20 张左右，跑完后过一小时再继续执行
+
 ## 构建检查
 
 ```bash

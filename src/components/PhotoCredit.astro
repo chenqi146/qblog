@@ -1,0 +1,49 @@
+---
+import type { ImageCredit } from "../lib/image-credit";
+
+interface Props {
+	credit?: ImageCredit;
+	compact?: boolean;
+	class?: string;
+}
+
+const { credit, compact = false, class: className } = Astro.props;
+---
+
+{
+	credit && (
+		<p class:list={["photo-credit", compact && "is-compact", className]}>
+			Photo by{" "}
+			<a href={credit.profileUrl} target="_blank" rel="noreferrer">
+				{credit.photographer}
+			</a>{" "}
+			on{" "}
+			<a href={credit.photoUrl} target="_blank" rel="noreferrer">
+				Unsplash
+			</a>
+		</p>
+	)
+}
+
+<style>
+	.photo-credit {
+		margin: 0;
+		font-size: 0.8rem;
+		line-height: 1.45;
+		color: rgba(214, 214, 214, 0.75);
+	}
+
+	.photo-credit.is-compact {
+		font-size: 0.74rem;
+	}
+
+	.photo-credit a {
+		color: #9df8c9;
+		text-decoration: none;
+	}
+
+	.photo-credit a:hover,
+	.photo-credit a:focus-visible {
+		text-decoration: underline;
+	}
+</style>
