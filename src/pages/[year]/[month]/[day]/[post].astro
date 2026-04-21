@@ -1,0 +1,52 @@
+---
+import { getCollection } from "astro:content";
+import type { GetStaticPaths } from "astro";
+import PasswordGate from "../../../../components/PasswordGate.astro";
+import { withBase } from "../../../../lib/base";
+
+interface Props {
+	target: string;
+	title: string;
+}
+
+export const getStaticPaths = (async () => {
+	const posts = await getCollection("posts", (post) => post.data.draft !== true);
+
+	return posts.map((post) => {
+		const date = post.data.createdAt;
+		const year = String(date.getFullYear());
+		const month = String(date.getMonth() + 1).padStart(2, "0");
+		const day = String(date.getDate()).padStart(2, "0");
+
+		return {
+			params: {
+				year,
+				month,
+				day,
+				post: post.id,
+			},
+			props: {
+				target: withBase(`blog/${post.id}/`),
+				title: post.data.title,
+			},
+		};
+	});
+}) satisfies GetStaticPaths;
+
+const { target, title } = Astro.props as Props;
+const canonical = new URL(target, Astro.site).toString();
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="canonical" href={canonical} />
+		<meta name="robots" content="noindex" />
+		<title>{title}</title>
+	</head>
+	<body>
+		<PasswordGate redirectTo={target} />
+		<p>旧链接已迁移，正在跳转到 <a href={target}>{title}</a>。</p>
+	</body>
+</html>

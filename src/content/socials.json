@@ -1,0 +1,20 @@
+[
+	{
+		"id": 1,
+		"icon": {
+			"type": "simple-icons",
+			"name": "github"
+		},
+		"text": "GitHub",
+		"link": "https://github.com/chenqi146"
+	},
+	{
+		"id": 2,
+		"icon": {
+			"type": "lucide",
+			"name": "mail"
+		},
+		"text": "Email",
+		"link": "mailto:cqmike0315@gmail.com"
+	}
+]

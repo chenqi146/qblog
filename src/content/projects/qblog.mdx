@@ -1,0 +1,38 @@
+---
+title: QBlog
+date: 2026-04-21
+description: 使用 Astro + Spectre 构建，并部署到 GitHub Pages 的个人博客骨架。
+image: ../assets/spectre.png
+info:
+  - text: GitHub
+    link: https://github.com/cqmike/qblog
+    icon:
+      type: simple-icons
+      name: github
+  - text: GitHub Pages
+    icon:
+      type: lucide
+      name: earth
+---
+
+QBlog 是一个面向内容发布的静态博客项目。
+
+它的目标不是堆功能，而是把真正会长期使用的链路压缩到最短：
+
+- 本地写 Markdown
+- 本地预览
+- push 到 GitHub
+- 自动发布到 Pages
+
+## 当前结构
+
+- 博客主题：Spectre
+- 内容格式：MD / MDX
+- 搜索：Pagefind
+- 部署：GitHub Actions + GitHub Pages
+
+## 为什么单独保留项目页
+
+博客文章负责持续更新，项目页负责描述“这个站点本身是什么”。
+
+这样首页既能展示文章流，也能保留一个稳定的项目入口，后面再加别的 side project 也不会破坏结构。

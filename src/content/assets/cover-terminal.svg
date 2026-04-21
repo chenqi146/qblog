@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="220" y1="88" x2="1362" y2="810" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#081311" />
+      <stop offset="1" stop-color="#030706" />
+    </linearGradient>
+    <radialGradient id="halo" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1090 446) rotate(180) scale(508 314)">
+      <stop stop-color="#8CF7C0" stop-opacity=".12" />
+      <stop offset=".62" stop-color="#8CF7C0" stop-opacity=".03" />
+      <stop offset="1" stop-color="#8CF7C0" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="accent" x1="1036" y1="450" x2="1366" y2="450" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B9FF72" />
+      <stop offset=".52" stop-color="#7EF5B4" />
+      <stop offset="1" stop-color="#59B5FF" />
+    </linearGradient>
+    <pattern id="grid" width="72" height="72" patternUnits="userSpaceOnUse">
+      <path d="M72 0H0V72" stroke="#92F7C4" stroke-opacity=".08" />
+    </pattern>
+  </defs>
+
+  <rect width="1600" height="900" fill="#020504" />
+  <rect width="1600" height="900" fill="url(#bg)" />
+  <rect width="1600" height="900" fill="url(#grid)" />
+  <ellipse cx="1090" cy="446" rx="508" ry="314" fill="url(#halo)" />
+
+  <rect x="64" y="64" width="1472" height="772" rx="28" fill="#06100F" stroke="#1D3630" stroke-width="2" />
+  <rect x="120" y="170" width="1360" height="560" rx="24" fill="#081514" stroke="#24413A" stroke-width="2" />
+  <path d="M120 234H1480" stroke="#18302B" stroke-width="2" />
+
+  <circle cx="164" cy="202" r="9" fill="#FF8D67" />
+  <circle cx="196" cy="202" r="9" fill="#FFD56B" />
+  <circle cx="228" cy="202" r="9" fill="#8EF5BD" />
+
+  <text x="1276" y="210" fill="#87C4AB" fill-opacity=".78" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22" letter-spacing="3">DEFAULT COVER</text>
+
+  <text x="188" y="322" fill="#91F8C3" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="28" letter-spacing="1.6">visitor@qblog:~$</text>
+  <text x="188" y="372" fill="#D2F889" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="52">open entry</text>
+
+  <rect x="188" y="424" width="356" height="10" rx="5" fill="#8EF5BD" fill-opacity=".92" />
+  <rect x="188" y="454" width="288" height="8" rx="4" fill="#395B53" />
+  <rect x="188" y="478" width="332" height="8" rx="4" fill="#28433D" />
+
+  <rect x="188" y="562" width="196" height="44" rx="12" fill="#0C1C1A" stroke="#23423B" stroke-width="2" />
+  <text x="216" y="591" fill="#89BDA7" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22">draft mode</text>
+
+  <path d="M1038 334L1148 450L1038 566" stroke="#8EF5BD" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" />
+  <rect x="1194" y="410" width="176" height="80" rx="12" fill="url(#accent)" />
+  <rect x="1004" y="278" width="406" height="344" rx="28" stroke="#18322D" stroke-width="2" />
+  <path d="M1004 650H1410" stroke="#18322D" stroke-width="2" />
+
+  <text x="1028" y="692" fill="#6F9587" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20" letter-spacing="2">archive / notes / essays</text>
+
+  <rect x="120" y="782" width="1360" height="10" rx="5" fill="#112220" />
+  <rect x="120" y="782" width="462" height="10" rx="5" fill="#8EF5BD" fill-opacity=".78" />
+  <rect x="614" y="782" width="244" height="10" rx="5" fill="#59B5FF" fill-opacity=".66" />
+  <rect x="886" y="782" width="170" height="10" rx="5" fill="#D2F889" fill-opacity=".74" />
+</svg>

@@ -1,0 +1,68 @@
+---
+import "../styles/article-list.css";
+
+import { getCollection } from "astro:content";
+import { openGraph } from "spectre:globals";
+import Card from "../components/Card.astro";
+import ContentPreviewCard from "../components/ContentPreviewCard.astro";
+import Icon from "../components/Icon.astro";
+import { withBase } from "../lib/base";
+import Layout from "../layouts/Layout.astro";
+
+const projects = await getCollection("projects");
+---
+<Layout
+	title={openGraph.projects.title || "Projects"}
+	description={openGraph.projects.description}
+	pagefindIgnore
+>
+  <div class="layout-grid-left" slot="left">
+    <Card class="flex-col-card">
+      <h2 class="no-mt">统计</h2>
+			<div class="stats-div">
+				<div class="stat">
+					<h3 class="text-glow">{projects.length}</h3>
+					<span>项目</span>
+				</div>
+			</div>
+    </Card>
+  </div>
+  <div class="layout-grid-right" slot="right">
+		<Card>
+			<div class="header-container">
+				<Icon type='lucide' name="folder-git" width={24} height={24} class='glow-icon' />
+				<h2>项目列表</h2>
+			</div>
+			<div class="content-container">
+				{projects.sort((a, b) => b.data.date.getTime() - a.data.date.getTime()).map((post) => (
+					<ContentPreviewCard
+						href={withBase(`projects/${post.id}/`)}
+						title={post.data.title}
+						description={post.data.description}
+						date={post.data.date}
+						image={post.data.image}
+					/>
+				))}
+			</div>
+		</Card>
+  </div>
+</Layout>
+<style>
+	.stats-div {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.stat {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.stat h3 {
+		font-size: 2em;
+		margin: 0;
+		margin-bottom: .5rem;
+	}
+
+</style>

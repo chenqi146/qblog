@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none">
+  <rect width="1600" height="900" fill="#090C14" />
+  <rect x="58" y="58" width="1484" height="784" rx="28" fill="#0E1320" stroke="#33425E" stroke-width="2" />
+  <rect x="126" y="126" width="1348" height="648" rx="28" fill="#05070B" />
+  <path d="M126 126H1474V240H126V126Z" fill="#151C2C" />
+  <path d="M126 660H1474V774H126V660Z" fill="#151C2C" />
+  <path d="M126 126L254 240" stroke="#2A364D" stroke-width="10" />
+  <path d="M286 126L414 240" stroke="#2A364D" stroke-width="10" />
+  <path d="M446 126L574 240" stroke="#2A364D" stroke-width="10" />
+  <path d="M606 126L734 240" stroke="#2A364D" stroke-width="10" />
+  <path d="M126 660L254 774" stroke="#2A364D" stroke-width="10" />
+  <path d="M286 660L414 774" stroke="#2A364D" stroke-width="10" />
+  <path d="M446 660L574 774" stroke="#2A364D" stroke-width="10" />
+  <path d="M606 660L734 774" stroke="#2A364D" stroke-width="10" />
+  <rect x="294" y="280" width="1012" height="340" rx="22" fill="url(#paint0_linear)" />
+  <path d="M738 388L930 450L738 512V388Z" fill="#FFF4C8" fill-opacity=".94" />
+  <circle cx="1200" cy="336" r="42" fill="#18243A" stroke="#445B87" stroke-width="8" />
+  <circle cx="1200" cy="564" r="42" fill="#18243A" stroke="#445B87" stroke-width="8" />
+  <defs>
+    <linearGradient id="paint0_linear" x1="800" y1="280" x2="800" y2="620" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#213355" />
+      <stop offset=".55" stop-color="#111A29" />
+      <stop offset="1" stop-color="#0B101A" />
+    </linearGradient>
+  </defs>
+</svg>

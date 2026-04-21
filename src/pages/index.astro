@@ -1,0 +1,183 @@
+---
+import "../styles/index.css";
+
+import { getCollection, getEntry, render } from "astro:content";
+import { name, openGraph } from "spectre:globals";
+import ProfilePicture from "../assets/pfp.png";
+import Card from "../components/Card.astro";
+import ContentPreviewCard from "../components/ContentPreviewCard.astro";
+import Icon from "../components/Icon.astro";
+import ImageGlow from "../components/ImageGlow.astro";
+import { withBase } from "../lib/base";
+import Layout from "../layouts/Layout.astro";
+
+const [posts, projects, about, workExperience, quickInfo, socials] =
+	await Promise.all([
+		getCollection("posts", (post) => post.data.draft !== true),
+		getCollection("projects"),
+		getEntry("other", "about"),
+		getCollection("workExperience"),
+		getCollection("quickInfo"),
+		getCollection("socials"),
+	]);
+
+const { Content: About } = await render(about!);
+---
+
+<Layout
+	title={openGraph.home.title || name}
+	description={openGraph.home.description}
+	pagefindIgnore
+>
+	<div class="layout-grid-left" slot="left">
+		<Card class="flex-col-card">
+			<ImageGlow
+				quality={100}
+				width={120}
+				height={120}
+				src={ProfilePicture}
+				alt="QBlog avatar placeholder"
+				loading="eager"
+			/>
+			<h2>{name}</h2>
+			<ul class="overview-list">
+				{
+					quickInfo.map((info) => (
+						<li>
+							<Icon
+								type={info.data.icon.type}
+								name={info.data.icon.name as any}
+								width={24}
+								height={24}
+								class="glow-icon"
+							/>
+							<span>{info.data.text}</span>
+						</li>
+					))
+				}
+			</ul>
+		</Card>
+		<Card>
+			<h3 class="no-mt">链接</h3>
+			<ul class="overview-list">
+				{
+					socials.map((item) => (
+						<li>
+							<a href={item.data.link} class="socials-link">
+								<Icon
+									type={item.data.icon.type}
+									name={item.data.icon.name as any}
+									width={24}
+									height={24}
+									class="glow-icon"
+								/>
+								<span>{item.data.text}</span>
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</Card>
+	</div>
+	<div class="layout-grid-right" slot="right">
+		<Card>
+			<div class="header-container">
+				<Icon
+					type="lucide"
+					name="user"
+					width={24}
+					height={24}
+					class="glow-icon"
+				/>
+				<h2>关于</h2>
+			</div>
+			<div class="prose">
+				<About />
+			</div>
+		</Card>
+		<Card>
+			<div class="header-container">
+				<Icon
+					type="lucide"
+					name="rss"
+					width={24}
+					height={24}
+					class="glow-icon"
+				/>
+				<h2>最新文章</h2>
+			</div>
+			<div class="content-container">
+				{
+					posts
+						.sort(
+							(a, b) => b.data.createdAt.getTime() - a.data.createdAt.getTime(),
+						)
+						.slice(0, 2)
+						.map((post) => (
+							<ContentPreviewCard
+								href={withBase(`blog/${post.id}/`)}
+								title={post.data.title}
+								description={post.data.description}
+								date={post.data.createdAt}
+								image={post.data.image}
+							/>
+						))
+				}
+			</div>
+		</Card>
+		<Card>
+			<div class="header-container">
+				<Icon
+					type="lucide"
+					name="folder-git"
+					width={24}
+					height={24}
+					class="glow-icon"
+				/>
+				<h2>项目</h2>
+			</div>
+			<div class="content-container">
+				{
+					projects
+						.sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+						.slice(0, 2)
+						.map((project) => (
+							<ContentPreviewCard
+								href={withBase(`projects/${project.id}/`)}
+								title={project.data.title}
+								description={project.data.description}
+								date={project.data.date}
+								image={project.data.image}
+							/>
+						))
+				}
+			</div>
+		</Card>
+		<Card>
+			<div class="header-container">
+				<Icon
+					type="lucide"
+					name="briefcase-business"
+					width={24}
+					height={24}
+					class="glow-icon"
+				/>
+				<h2>经历</h2>
+			</div>
+			<div class="work-experience-container">
+				{
+					workExperience.reverse().map((entry) => (
+						<div class="work-experience-entry">
+							<span class="work-experience-duration">
+								{entry.data.duration}
+							</span>
+							<h3 class="work-experience-company">{entry.data.company}</h3>
+							<span class="work-experience-role">{entry.data.title}</span>
+							<p class="work-experience-desc">{entry.data.description}</p>
+						</div>
+					))
+				}
+			</div>
+		</Card>
+	</div>
+</Layout>

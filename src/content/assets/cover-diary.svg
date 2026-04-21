@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="252" y1="92" x2="1360" y2="802" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#17110D" />
+      <stop offset="1" stop-color="#070605" />
+    </linearGradient>
+    <radialGradient id="halo" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1174 428) rotate(180) scale(486 308)">
+      <stop stop-color="#E8B77C" stop-opacity=".16" />
+      <stop offset=".56" stop-color="#E8B77C" stop-opacity=".05" />
+      <stop offset="1" stop-color="#E8B77C" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="ribbon" x1="901" y1="144" x2="901" y2="334" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E6B36D" />
+      <stop offset="1" stop-color="#D97B55" />
+    </linearGradient>
+    <linearGradient id="pageShadow" x1="288" y1="196" x2="1010" y2="748" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F0D8BB" stop-opacity=".12" />
+      <stop offset="1" stop-color="#F0D8BB" stop-opacity=".03" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="#050403" />
+  <rect width="1600" height="900" fill="url(#bg)" />
+  <ellipse cx="1174" cy="428" rx="486" ry="308" fill="url(#halo)" />
+
+  <rect x="64" y="64" width="1472" height="772" rx="28" fill="#0E0B09" stroke="#3B2F26" stroke-width="2" />
+  <rect x="120" y="120" width="1360" height="660" rx="24" fill="#120F0D" stroke="#2A221B" stroke-width="2" />
+
+  <rect x="300" y="192" width="720" height="540" rx="32" fill="url(#pageShadow)" />
+  <rect x="260" y="148" width="720" height="540" rx="32" fill="#F2E5D3" stroke="#D6C0A3" stroke-width="2" />
+
+  <path d="M864 148H980V264L864 148Z" fill="#E4D0B5" />
+  <path d="M980 148V264L864 148" stroke="#D0B493" stroke-width="2" />
+
+  <path d="M852 148H950V304L901 348L852 304V148Z" fill="url(#ribbon)" />
+
+  <rect x="326" y="196" width="164" height="52" rx="14" fill="#2C211B" />
+  <text x="358" y="229" fill="#F1D7B5" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="24" letter-spacing="2.5">APR 21</text>
+
+  <text x="336" y="304" fill="#3B2B1F" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="28" letter-spacing="1.5">daily entry</text>
+  <text x="336" y="356" fill="#927760" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22" letter-spacing="1.8">small notes from an ordinary day</text>
+
+  <path d="M352 250V610" stroke="#D48A66" stroke-width="4" stroke-linecap="round" />
+
+  <rect x="392" y="420" width="404" height="10" rx="5" fill="#6E5543" fill-opacity=".92" />
+  <rect x="392" y="456" width="332" height="8" rx="4" fill="#BEA388" fill-opacity=".84" />
+  <rect x="392" y="484" width="370" height="8" rx="4" fill="#BEA388" fill-opacity=".84" />
+  <rect x="392" y="512" width="286" height="8" rx="4" fill="#BEA388" fill-opacity=".84" />
+  <rect x="392" y="540" width="352" height="8" rx="4" fill="#BEA388" fill-opacity=".84" />
+  <rect x="392" y="568" width="244" height="8" rx="4" fill="#BEA388" fill-opacity=".84" />
+
+  <rect x="336" y="614" width="180" height="42" rx="12" fill="#E9D8C0" stroke="#D1B694" stroke-width="2" />
+  <text x="365" y="642" fill="#6A503D" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="21" letter-spacing="1.6">private notes</text>
+
+  <text x="1098" y="326" fill="#F1D7B5" fill-opacity=".94" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="34" letter-spacing="3">DIARY LOG</text>
+  <path d="M1098 354H1352" stroke="#6B5646" stroke-width="2" />
+
+  <text x="1098" y="498" fill="#E7B273" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="128" letter-spacing="4">04</text>
+  <text x="1210" y="620" fill="#EBD9C2" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="128" letter-spacing="4">21</text>
+
+  <circle cx="1120" cy="694" r="8" fill="#E6B36D" />
+  <circle cx="1160" cy="694" r="8" fill="#D98C63" />
+  <circle cx="1200" cy="694" r="8" fill="#F2E5D3" fill-opacity=".74" />
+  <path d="M1240 694H1360" stroke="#6B5646" stroke-width="2" stroke-linecap="round" />
+
+  <rect x="120" y="794" width="1360" height="10" rx="5" fill="#1A1512" />
+  <rect x="120" y="794" width="512" height="10" rx="5" fill="#D98C63" fill-opacity=".74" />
+  <rect x="668" y="794" width="218" height="10" rx="5" fill="#E6B36D" fill-opacity=".66" />
+  <rect x="920" y="794" width="164" height="10" rx="5" fill="#F2E5D3" fill-opacity=".56" />
+</svg>

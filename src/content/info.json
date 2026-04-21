@@ -1,0 +1,26 @@
+[
+	{
+		"id": 1,
+		"icon": {
+			"type": "lucide",
+			"name": "briefcase-business"
+		},
+		"text": "Software Developer"
+	},
+	{
+		"id": 2,
+		"icon": {
+			"type": "lucide",
+			"name": "mountain"
+		},
+		"text": "Hiking / Camping / Photography"
+	},
+	{
+		"id": 3,
+		"icon": {
+			"type": "lucide",
+			"name": "book-open-text"
+		},
+		"text": "Reading / Cinema / Notes"
+	}
+]

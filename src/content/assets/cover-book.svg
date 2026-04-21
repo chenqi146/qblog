@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none">
+  <rect width="1600" height="900" fill="#14100C" />
+  <rect x="52" y="52" width="1496" height="796" rx="28" fill="#1A1510" stroke="#5E4A31" stroke-width="2" />
+  <rect x="110" y="108" width="1380" height="684" rx="28" fill="url(#paint0_linear)" />
+  <path d="M430 224H818C865 224 904 262 904 310V694C904 718 885 737 861 737H500C445 737 400 693 400 637V254C400 237 413 224 430 224Z" fill="#F3E2C0" />
+  <path d="M826 224H1174C1191 224 1204 237 1204 254V637C1204 693 1159 737 1104 737H742C718 737 699 718 699 694V310C699 262 738 224 786 224H826Z" fill="#E7D3AB" />
+  <path d="M804 224V737" stroke="#B18B56" stroke-width="10" />
+  <rect x="480" y="308" width="252" height="22" rx="11" fill="#8B5E34" fill-opacity=".78" />
+  <rect x="480" y="358" width="316" height="14" rx="7" fill="#B69762" fill-opacity=".72" />
+  <rect x="480" y="394" width="276" height="14" rx="7" fill="#B69762" fill-opacity=".72" />
+  <rect x="480" y="430" width="294" height="14" rx="7" fill="#B69762" fill-opacity=".72" />
+  <rect x="876" y="308" width="212" height="22" rx="11" fill="#8B5E34" fill-opacity=".78" />
+  <rect x="876" y="358" width="252" height="14" rx="7" fill="#B69762" fill-opacity=".72" />
+  <rect x="876" y="394" width="282" height="14" rx="7" fill="#B69762" fill-opacity=".72" />
+  <rect x="876" y="430" width="230" height="14" rx="7" fill="#B69762" fill-opacity=".72" />
+  <path d="M296 248C296 233.641 307.641 222 322 222H360C374.359 222 386 233.641 386 248V734C386 748.359 374.359 760 360 760H322C307.641 760 296 748.359 296 734V248Z" fill="#7A5534" />
+  <path d="M1218 248C1218 233.641 1229.64 222 1244 222H1282C1296.36 222 1308 233.641 1308 248V734C1308 748.359 1296.36 760 1282 760H1244C1229.64 760 1218 748.359 1218 734V248Z" fill="#7A5534" />
+  <defs>
+    <linearGradient id="paint0_linear" x1="800" y1="108" x2="800" y2="792" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#241B13" />
+      <stop offset="1" stop-color="#18120E" />
+    </linearGradient>
+  </defs>
+</svg>

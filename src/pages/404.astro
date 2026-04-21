@@ -1,0 +1,40 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { withBase } from "../lib/base";
+---
+
+<Layout
+  title={"404"}
+  description={"页面不存在。"}
+	pagefindIgnore
+>
+  <div class="notfound-container" slot="404">
+    <h1 class="text-glow">404</h1>
+    <p>这个页面不存在，或者路径已经被移动。</p>
+    <a class="block-link" href={withBase()}>← 返回首页</a>
+  </div>
+</Layout>
+<style>
+  .notfound-container {
+    display: flex;
+    height: 80vh;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+    flex-direction: column;
+  }
+
+  .notfound-container h1 {
+    font-size: 4rem;
+    margin: 0;
+  }
+
+  .notfound-container p {
+    font-size: 1.25em;
+  }
+
+  .block-link {
+    margin-top: 1rem;
+  }
+</style>
