@@ -14,6 +14,10 @@ const pagefindPath = withBase("pagefind/pagefind.js");
     </li>
     <li class="nav-separator">/</li>
     <li>
+      <a href={withBase("us/")} class:list={{ active: path.startsWith('/us') }}>我们</a>
+    </li>
+    <li class="nav-separator">/</li>
+    <li>
       <a href={withBase("projects/")} class:list={{ active: path.startsWith('/projects') }}>项目</a>
     </li>
     <li class="nav-separator">/</li>

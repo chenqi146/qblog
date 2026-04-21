@@ -1,0 +1,340 @@
+---
+import "../styles/index.css";
+
+import heroImage from "../content/assets/unsplash/us-hero-landscape.jpg";
+import Card from "../components/Card.astro";
+import Icon from "../components/Icon.astro";
+import Layout from "../layouts/Layout.astro";
+
+const startDate = new Date(2025, 9, 17);
+const startDateValue = "2025-10-17";
+const coupleName = "喵喵 × 琪琪";
+const coupleNamesText = "喵喵和琪琪";
+const startDateText = new Intl.DateTimeFormat("zh-CN", {
+	year: "numeric",
+	month: "long",
+	day: "numeric",
+}).format(startDate);
+---
+
+<Layout
+	title={coupleNamesText}
+	description={`从 ${startDateText} 开始，把属于 ${coupleNamesText} 的时间认真记下来。`}
+>
+	<div class="layout-grid-left" slot="left">
+		<Card class="flex-col-card">
+			<div class="header-container">
+				<Icon
+					type="lucide"
+					name="heart"
+					width={24}
+					height={24}
+					class="glow-icon"
+				/>
+				<h2>{coupleName}</h2>
+				</div>
+				<p class="sidebar-copy">
+					把 <strong>{startDateText}</strong> 作为 <strong>{coupleNamesText}</strong> 的开始。
+				</p>
+			<ul class="overview-list relationship-stats">
+				<li>
+					<span>开始于</span>
+					<strong>{startDateText}</strong>
+				</li>
+				<li>
+					<span>纪念日</span>
+					<strong>每年 10 月 17 日</strong>
+				</li>
+				<li>
+					<span>今天</span>
+					<strong data-relationship-days>计算中</strong>
+				</li>
+			</ul>
+		</Card>
+	</div>
+
+	<div class="layout-grid-right" slot="right">
+		<Card>
+			<div class="header-container">
+				<Icon
+					type="lucide"
+					name="clock-3"
+					width={24}
+					height={24}
+					class="glow-icon"
+				/>
+				<h2>从这一天开始</h2>
+			</div>
+			<div class="relationship-card-grid">
+					<article class="memory-card memory-card-hero">
+						<div class="memory-hero-image-wrap">
+							<img
+								src={heroImage.src}
+								alt="落日下的湖面与远山风景"
+								width={heroImage.width}
+								height={heroImage.height}
+								class="memory-hero-image"
+								loading="eager"
+								decoding="async"
+							/>
+						</div>
+					<p class="memory-label">OUR START</p>
+					<time class="memory-date" datetime={startDateValue}>{startDateText}</time>
+					<h3>{coupleNamesText}</h3>
+					<strong class="memory-emphasis" data-relationship-headline>
+						今天会自动换算成最新的纪念天数。
+					</strong>
+				</article>
+
+				<article class="memory-card">
+					<p class="memory-label">TODAY</p>
+					<h3>今天是第几天</h3>
+					<strong class="memory-metric" data-relationship-days-large>计算中</strong>
+				</article>
+
+				<article class="memory-card">
+					<p class="memory-label">DURATION</p>
+					<h3>已经一起走过</h3>
+					<strong class="memory-metric" data-relationship-duration>计算中</strong>
+				</article>
+
+				<article class="memory-card">
+					<p class="memory-label" data-relationship-anniversary-label>ANNIVERSARY</p>
+					<h3>距离下一次周年</h3>
+					<strong class="memory-metric" data-relationship-anniversary>计算中</strong>
+				</article>
+
+				<article class="memory-card">
+					<p class="memory-label">NEXT DATE</p>
+					<h3>下一次纪念日</h3>
+					<strong class="memory-metric-small" data-relationship-next-date>计算中</strong>
+				</article>
+			</div>
+		</Card>
+	</div>
+</Layout>
+
+<script is:inline define:vars={{ startDateValue }}>
+	const DAY_MS = 24 * 60 * 60 * 1000;
+	const formatter = new Intl.DateTimeFormat("zh-CN", {
+		year: "numeric",
+		month: "long",
+		day: "numeric",
+	});
+
+	function parseLocalDate(value) {
+		const [year, month, day] = value.split("-").map(Number);
+		return new Date(year, month - 1, day);
+	}
+
+	function atStartOfDay(date) {
+		return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+	}
+
+	function diffCalendarDays(from, to) {
+		return Math.round((atStartOfDay(to) - atStartOfDay(from)) / DAY_MS);
+	}
+
+	function diffMonthsAndDays(from, to) {
+		let months =
+			(to.getFullYear() - from.getFullYear()) * 12 +
+			(to.getMonth() - from.getMonth());
+
+		let anchor = new Date(from.getFullYear(), from.getMonth() + months, from.getDate());
+
+		if (anchor > to) {
+			months -= 1;
+			anchor = new Date(from.getFullYear(), from.getMonth() + months, from.getDate());
+		}
+
+		return {
+			months,
+			days: diffCalendarDays(anchor, to),
+		};
+	}
+
+	function getNextAnniversary(start, today) {
+		let year = today.getFullYear();
+		let anniversary = new Date(year, start.getMonth(), start.getDate());
+
+		if (atStartOfDay(anniversary) < atStartOfDay(today)) {
+			year += 1;
+			anniversary = new Date(year, start.getMonth(), start.getDate());
+		}
+
+		return anniversary;
+	}
+
+	const startDate = parseLocalDate(startDateValue);
+	const today = atStartOfDay(new Date());
+	const elapsedDays = diffCalendarDays(startDate, today) + 1;
+	const elapsed = diffMonthsAndDays(startDate, today);
+	const nextAnniversary = getNextAnniversary(startDate, today);
+	const nextAnniversaryNumber = nextAnniversary.getFullYear() - startDate.getFullYear();
+	const untilAnniversary = diffCalendarDays(today, nextAnniversary);
+
+	const dayText = `第 ${elapsedDays} 天`;
+
+	document.querySelectorAll("[data-relationship-days]").forEach((element) => {
+		element.textContent = dayText;
+	});
+
+	const daysLarge = document.querySelector("[data-relationship-days-large]");
+	if (daysLarge) {
+		daysLarge.textContent = dayText;
+	}
+
+	const durationElement = document.querySelector("[data-relationship-duration]");
+	if (durationElement) {
+		durationElement.textContent = `${elapsed.months} 个月 ${elapsed.days} 天`;
+	}
+
+	const anniversaryLabelElement = document.querySelector("[data-relationship-anniversary-label]");
+	if (anniversaryLabelElement) {
+		anniversaryLabelElement.textContent = `${nextAnniversaryNumber} YEAR`;
+	}
+
+	const anniversaryElement = document.querySelector("[data-relationship-anniversary]");
+	if (anniversaryElement) {
+		anniversaryElement.textContent =
+			untilAnniversary === 0 ? "就是今天" : `还有 ${untilAnniversary} 天`;
+	}
+
+	const nextDateElement = document.querySelector("[data-relationship-next-date]");
+	if (nextDateElement) {
+		nextDateElement.textContent = formatter.format(nextAnniversary);
+	}
+
+	const headlineElement = document.querySelector("[data-relationship-headline]");
+	if (headlineElement) {
+		headlineElement.textContent = `今天是我们在一起的第 ${elapsedDays} 天。`;
+	}
+</script>
+
+<style>
+	.sidebar-copy {
+		margin: 0;
+		line-height: 1.6;
+		color: #c7c7c7;
+	}
+
+	.sidebar-copy strong {
+		color: white;
+		font-weight: 600;
+	}
+
+	.relationship-stats {
+		display: flex;
+		flex-direction: column;
+		gap: 0.85rem;
+		margin-top: 1rem;
+	}
+
+	.relationship-stats li {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.35rem;
+		padding-bottom: 0.85rem;
+		border-bottom: 1px solid #353535;
+		margin-bottom: 0;
+	}
+
+	.relationship-stats li:last-child {
+		padding-bottom: 0;
+		border-bottom: none;
+	}
+
+	.relationship-stats span,
+	.memory-label,
+	.memory-date {
+		font-family: "Geist Mono", "Courier New", Courier, monospace;
+		font-size: 0.88rem;
+		color: #c7c7c7;
+	}
+
+	.relationship-stats strong {
+		color: white;
+		font-size: 1rem;
+	}
+
+	.relationship-card-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
+	}
+
+	.memory-card {
+		display: flex;
+		flex-direction: column;
+		gap: 0.45rem;
+		padding: 1rem;
+		border: 1px solid #353535;
+		background-color: rgba(255, 255, 255, 0.02);
+	}
+
+	.memory-card-hero {
+		grid-column: 1 / -1;
+		background:
+			linear-gradient(135deg, rgba(var(--primary-rgb), 0.14), transparent 42%),
+			rgba(255, 255, 255, 0.02);
+	}
+
+	.memory-hero-image-wrap {
+		margin: -1rem -1rem 0;
+		overflow: hidden;
+		border-bottom: 1px solid #353535;
+		background: #0f0f0f;
+	}
+
+	.memory-hero-image {
+		display: block;
+		width: 100%;
+		height: clamp(180px, 24vw, 260px);
+		object-fit: cover;
+		filter: saturate(1.05) contrast(1.02);
+	}
+
+	.memory-label {
+		margin: 0;
+		letter-spacing: 0.08em;
+	}
+
+	.memory-date {
+		color: white;
+	}
+
+	.memory-card h3 {
+		margin: 0;
+	}
+
+	.memory-emphasis,
+	.memory-metric,
+	.memory-metric-small {
+		color: white;
+		font-weight: 600;
+		line-height: 1.2;
+	}
+
+	.memory-emphasis {
+		font-size: 1.15rem;
+	}
+
+	.memory-metric {
+		font-size: 1.8rem;
+	}
+
+	.memory-metric-small {
+		font-size: 1.15rem;
+	}
+
+	@media screen and (max-width: 900px) {
+		.relationship-card-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.memory-card-hero {
+			grid-column: auto;
+		}
+	}
+</style>
