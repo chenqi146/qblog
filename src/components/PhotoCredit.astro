@@ -30,7 +30,7 @@ const { credit, compact = false, class: className } = Astro.props;
 		margin: 0;
 		font-size: 0.8rem;
 		line-height: 1.45;
-		color: rgba(214, 214, 214, 0.75);
+		color: var(--muted-foreground);
 	}
 
 	.photo-credit.is-compact {
@@ -38,7 +38,7 @@ const { credit, compact = false, class: className } = Astro.props;
 	}
 
 	.photo-credit a {
-		color: #9df8c9;
+		color: var(--link);
 		text-decoration: none;
 	}
 

@@ -47,6 +47,19 @@ const workExperience = defineCollection({
 	}),
 });
 
+const books = defineCollection({
+	loader: file("src/content/books.json"),
+	schema: z.object({
+		id: z.number(),
+		title: z.string(),
+		author: z.string().optional(),
+		status: z.enum(["read", "want"]),
+		date: z.coerce.date().optional(),
+		note: z.string().optional(),
+		link: z.string().optional(),
+	}),
+});
+
 const tags = defineCollection({
 	loader: file("src/content/tags.json"),
 	schema: z.object({
@@ -103,6 +116,7 @@ export const collections = {
 	tags,
 	posts,
 	projects,
+	books,
 	other,
 	quickInfo,
 	socials,

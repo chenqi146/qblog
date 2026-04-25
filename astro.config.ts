@@ -41,7 +41,7 @@ const config = defineConfig({
 		sitemap(),
 		spectre({
 			name: 'CQ',
-			themeColor: '#8c5cf5',
+			themeColor: '#1c2a1f',
 			openGraph: {
 				home: {
 					title: 'Black Joker',

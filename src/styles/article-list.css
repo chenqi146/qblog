@@ -23,18 +23,22 @@
 
 .blog-tag {
 	padding: 0.25rem 0.5rem;
-	background: #252525;
-	color: white;
+	background: var(--secondary);
+	color: var(--secondary-foreground);
+	border: 1px solid var(--border);
+	border-radius: calc(var(--radius) * 0.75);
 	text-decoration: none;
 }
 
 .blog-tag:hover,
 .blog-tag:focus-visible {
-	background: #353535;
-	color: white;
+	background: var(--accent);
+	color: var(--accent-foreground);
 	text-decoration: none;
 }
 
 .blog-tag.active {
 	background: var(--primary);
+	color: var(--primary-foreground);
+	border-color: var(--primary);
 }

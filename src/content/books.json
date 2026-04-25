@@ -1,0 +1,20 @@
+[
+	{
+		"id": 1,
+		"title": "非暴力沟通",
+		"author": "马歇尔·卢森堡",
+		"status": "read",
+		"date": "2025-01-08",
+		"note": "不带评论的观察是人类智力的最高形式。",
+		"link": "blog/book-non-violent/"
+	},
+	{
+		"id": 2,
+		"title": "我胆小如鼠",
+		"author": "余华",
+		"status": "read",
+		"date": "2025-01-24",
+		"note": "冷静客观地看待事物，温柔地去执行。",
+		"link": "blog/book-我胆小如鼠/"
+	}
+]

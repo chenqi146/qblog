@@ -30,6 +30,7 @@ class PageBackground {
 	private letterInstances: LetterInstance[] = [];
 
 	private primaryRgb: string;
+	private foregroundRgb: string;
 
 	/**
 	 * Initializes the background on the page.
@@ -57,11 +58,9 @@ class PageBackground {
 		overlayCanvas.width = this.width;
 		overlayCanvas.height = this.height;
 
-		// Set the primary color to the first color in the theme
-		this.primaryRgb = window
-			.getComputedStyle(document.documentElement)
-			.getPropertyValue("--primary-rgb")
-			.trim();
+		this.primaryRgb = "";
+		this.foregroundRgb = "";
+		this.syncThemeColors();
 
 		this.initBackground();
 
@@ -89,7 +88,7 @@ class PageBackground {
 		this.baseCtx.font = "28px Geist Mono";
 		this.baseCtx.textAlign = "start";
 		this.baseCtx.textBaseline = "top";
-		this.baseCtx.fillStyle = "rgba(255, 255, 255, 0.01)";
+		this.baseCtx.fillStyle = `rgba(${this.foregroundRgb}, 0.035)`;
 
 		for (let i = 0; i < lines; i++) {
 			for (let j = 0; j < letters; j++) {
@@ -163,6 +162,13 @@ class PageBackground {
 		const progress = (timestamp - start) / totalDuration;
 
 		return Math.max(0, 0.5 - 0.5 * Math.cos(progress * Math.PI));
+	};
+
+	private syncThemeColors = () => {
+		const styles = window.getComputedStyle(document.documentElement);
+
+		this.primaryRgb = styles.getPropertyValue("--primary-rgb").trim();
+		this.foregroundRgb = styles.getPropertyValue("--foreground-rgb").trim();
 	};
 
 	/**
@@ -252,6 +258,8 @@ class PageBackground {
 	 * Resizes the background canvases.
 	 */
 	public resizeBackground = () => {
+		this.syncThemeColors();
+
 		this.width = window.innerWidth;
 		this.height = window.innerHeight;
 
@@ -301,6 +309,10 @@ async function initializeBackground() {
 	const background = new PageBackground(canvas, overlayCanvas);
 
 	window.addEventListener("resize", () => {
+		background.resizeBackground();
+	});
+
+	window.addEventListener("qblog-theme-change", () => {
 		background.resizeBackground();
 	});
 }

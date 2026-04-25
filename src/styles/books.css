@@ -1,0 +1,665 @@
+.book-stats li {
+	align-items: flex-start;
+	justify-content: space-between;
+	padding-bottom: 0.75rem;
+	border-bottom: 1px solid var(--border);
+}
+
+.book-stats li:last-child {
+	padding-bottom: 0;
+	border-bottom: none;
+}
+
+.book-stats span {
+	color: var(--muted-foreground);
+}
+
+.book-stats strong {
+	color: var(--foreground);
+	font-family: var(--font-mono);
+	font-size: 1.35rem;
+	line-height: 1;
+}
+
+.kindle-stage {
+	--books-ease: cubic-bezier(0.22, 1, 0.36, 1);
+	--books-ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	perspective: 1200px;
+}
+
+.kindle-device {
+	position: relative;
+	width: min(100%, 760px);
+	min-height: 720px;
+	padding: 3.25rem 2.25rem 2rem;
+	border: 1px solid color-mix(in oklch, var(--border), var(--foreground) 20%);
+	border-radius: 2rem;
+	background:
+		linear-gradient(145deg, rgb(var(--foreground-rgb) / 0.08), transparent 32%),
+		color-mix(in oklch, var(--card), var(--background) 46%);
+	box-shadow:
+		var(--shadow-xl),
+		inset 0 0 0 1px rgb(var(--foreground-rgb) / 0.04);
+	color: var(--foreground);
+	transform-origin: 50% 70%;
+	animation: kindle-device-in 680ms var(--books-ease-expo) both;
+	transition:
+		transform 0.32s var(--books-ease),
+		box-shadow 0.32s var(--books-ease),
+		background-color 0.2s ease;
+}
+
+html[data-theme="dark"] .kindle-device {
+	background:
+		linear-gradient(145deg, rgb(var(--primary-rgb) / 0.08), transparent 34%),
+		color-mix(in oklch, var(--card), black 18%);
+	box-shadow:
+		0 28px 70px rgb(0 0 0 / 0.32),
+		inset 0 0 0 1px rgb(var(--foreground-rgb) / 0.05);
+}
+
+@media (hover: hover) {
+	.kindle-device:hover {
+		transform: translateY(-0.22rem) rotateX(0.8deg);
+		box-shadow:
+			0 26px 64px rgb(var(--foreground-rgb) / 0.16),
+			inset 0 0 0 1px rgb(var(--foreground-rgb) / 0.04);
+	}
+
+	html[data-theme="dark"] .kindle-device:hover {
+		box-shadow:
+			0 34px 86px rgb(0 0 0 / 0.42),
+			0 0 32px rgb(var(--primary-rgb) / 0.1),
+			inset 0 0 0 1px rgb(var(--foreground-rgb) / 0.05);
+	}
+}
+
+.kindle-speaker {
+	width: 4.75rem;
+	height: 0.28rem;
+	margin: -1.55rem auto 1.35rem;
+	border-radius: 999px;
+	background: color-mix(in oklch, var(--border), var(--foreground) 28%);
+	opacity: 0.72;
+}
+
+.kindle-screen {
+	position: relative;
+	overflow: hidden;
+	min-height: 570px;
+	padding: clamp(1rem, 3vw, 2rem);
+	border: 1px solid var(--border);
+	border-radius: 0.55rem;
+	background:
+		radial-gradient(
+			circle at 18% 8%,
+			rgb(var(--primary-rgb) / 0.08),
+			transparent 28%
+		),
+		linear-gradient(
+			180deg,
+			color-mix(in oklch, var(--background), var(--card) 44%),
+			color-mix(in oklch, var(--muted), var(--background) 70%)
+		);
+	box-shadow:
+		inset 0 1px 10px rgb(var(--foreground-rgb) / 0.06),
+		inset 0 0 0 1px rgb(var(--foreground-rgb) / 0.03);
+}
+
+.kindle-screen::before {
+	position: absolute;
+	inset: -42% -16%;
+	z-index: 0;
+	content: "";
+	background: linear-gradient(
+		180deg,
+		transparent 0%,
+		rgb(var(--primary-rgb) / 0.02) 42%,
+		rgb(var(--primary-rgb) / 0.13) 49%,
+		rgb(var(--foreground-rgb) / 0.06) 52%,
+		transparent 62%
+	);
+	pointer-events: none;
+	transform: translateY(-56%);
+	animation: kindle-screen-scan 4.8s var(--books-ease) 700ms infinite;
+}
+
+.kindle-screen::after {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	content: "";
+	background-image:
+		repeating-linear-gradient(
+			0deg,
+			rgb(var(--foreground-rgb) / 0.055) 0,
+			rgb(var(--foreground-rgb) / 0.055) 1px,
+			transparent 1px,
+			transparent 5px
+		),
+		radial-gradient(
+			circle at 78% 12%,
+			rgb(var(--primary-rgb) / 0.09),
+			transparent 28%
+		);
+	opacity: 0.48;
+	pointer-events: none;
+}
+
+.kindle-screen > * {
+	position: relative;
+	z-index: 1;
+}
+
+.kindle-toolbar {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 1rem;
+	padding-bottom: 1rem;
+	border-bottom: 1px solid var(--border);
+	animation: kindle-content-in 520ms var(--books-ease) 120ms both;
+}
+
+.kindle-kicker {
+	margin: 0 0 0.35rem;
+	color: var(--muted-foreground);
+	font-family: var(--font-mono);
+	font-size: 0.8rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.kindle-toolbar h1 {
+	margin: 0;
+	font-size: clamp(1.8rem, 5vw, 3.15rem);
+	line-height: 1;
+}
+
+.kindle-status {
+	display: flex;
+	gap: 0.22rem;
+	align-items: end;
+	padding-top: 0.25rem;
+}
+
+.kindle-status span {
+	display: block;
+	width: 0.28rem;
+	border-radius: 999px;
+	background: var(--primary);
+	transform-origin: 50% 100%;
+	animation: kindle-status-pulse 1.7s var(--books-ease) infinite;
+}
+
+.kindle-status span:nth-child(1) {
+	height: 0.55rem;
+	opacity: 0.5;
+	animation-delay: 0ms;
+}
+
+.kindle-status span:nth-child(2) {
+	height: 0.82rem;
+	opacity: 0.72;
+	animation-delay: 120ms;
+}
+
+.kindle-status span:nth-child(3) {
+	height: 1.1rem;
+	animation-delay: 240ms;
+}
+
+.kindle-tabs {
+	position: relative;
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 0.5rem;
+	margin: 1rem 0;
+	padding: 0.28rem;
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	background: color-mix(in oklch, var(--muted), transparent 22%);
+	overflow: hidden;
+	isolation: isolate;
+	animation: kindle-content-in 520ms var(--books-ease) 210ms both;
+}
+
+.kindle-tabs::before {
+	position: absolute;
+	top: 0.28rem;
+	bottom: 0.28rem;
+	left: 0.28rem;
+	z-index: 1;
+	width: calc((100% - 1.06rem) / 2);
+	border-radius: calc(var(--radius) * 0.75);
+	content: "";
+	background:
+		linear-gradient(135deg, rgb(var(--foreground-rgb) / 0.08), transparent 48%),
+		var(--primary);
+	box-shadow:
+		0 8px 24px rgb(var(--primary-rgb) / 0.22),
+		inset 0 1px 0 rgb(255 255 255 / 0.18);
+	transform: translateX(0);
+	transition: transform 0.28s var(--books-ease);
+}
+
+.kindle-tabs[data-active="want"]::before {
+	transform: translateX(calc(100% + 0.5rem));
+}
+
+.kindle-tab {
+	position: relative;
+	z-index: 2;
+	min-width: 0;
+	padding: 0.72rem 0.5rem;
+	border-radius: calc(var(--radius) * 0.75);
+	color: var(--muted-foreground);
+	cursor: pointer;
+	transition:
+		background-color 0.2s ease,
+		box-shadow 0.2s ease,
+		color 0.2s ease,
+		text-shadow 0.2s ease,
+		transform 0.2s var(--books-ease);
+}
+
+.kindle-tab:hover,
+.kindle-tab:focus-visible {
+	color: var(--foreground);
+	outline: none;
+}
+
+.kindle-tab:hover {
+	transform: translateY(-1px);
+}
+
+.kindle-tab:focus-visible {
+	box-shadow: 0 0 0 2px var(--ring);
+}
+
+.kindle-tab.is-active {
+	background: var(--primary);
+	box-shadow:
+		0 8px 24px rgb(var(--primary-rgb) / 0.22),
+		inset 0 1px 0 rgb(255 255 255 / 0.18);
+	color: var(--primary-foreground);
+	text-shadow: 0 1px 10px rgb(var(--foreground-rgb) / 0.16);
+}
+
+.kindle-panel[hidden] {
+	display: none;
+}
+
+.kindle-panels {
+	animation: kindle-content-in 520ms var(--books-ease) 300ms both;
+}
+
+.kindle-panel.is-active {
+	animation: kindle-panel-in 260ms var(--books-ease) both;
+}
+
+.shelf-heading {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	margin-bottom: 0.85rem;
+	color: var(--muted-foreground);
+	font-family: var(--font-mono);
+	font-size: 0.82rem;
+	text-transform: uppercase;
+}
+
+.shelf-heading strong {
+	color: var(--foreground);
+	font-weight: 600;
+}
+
+.book-list {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.book-item {
+	position: relative;
+	display: grid;
+	grid-template-columns: 4.25rem minmax(0, 1fr);
+	gap: 1rem;
+	padding: 0.85rem;
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	background: rgb(var(--background-rgb) / 0.36);
+	overflow: hidden;
+	transform: translateY(0);
+	animation: book-item-in 440ms var(--books-ease) both;
+	animation-delay: calc(360ms + (var(--book-index) * 80ms));
+	transition:
+		transform 0.22s var(--books-ease),
+		border-color 0.22s ease,
+		background-color 0.22s ease,
+		box-shadow 0.22s ease;
+}
+
+.book-item::before {
+	position: absolute;
+	inset: 0;
+	content: "";
+	background: linear-gradient(
+		120deg,
+		transparent 0%,
+		rgb(var(--primary-rgb) / 0.08) 46%,
+		transparent 74%
+	);
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.22s ease;
+}
+
+.book-item:hover,
+.book-item:focus-within {
+	border-color: color-mix(in oklch, var(--primary), var(--border) 28%);
+	background: rgb(var(--background-rgb) / 0.52);
+	box-shadow: 0 16px 34px rgb(var(--foreground-rgb) / 0.08);
+	transform: translateY(-0.18rem);
+}
+
+.book-item:hover::before,
+.book-item:focus-within::before {
+	opacity: 1;
+}
+
+.book-cover {
+	position: relative;
+	display: grid;
+	place-items: center;
+	aspect-ratio: 3 / 4;
+	border: 1px solid color-mix(in oklch, var(--primary), var(--border) 46%);
+	border-radius: calc(var(--radius) * 0.7);
+	background:
+		linear-gradient(145deg, rgb(var(--primary-rgb) / 0.16), transparent 58%),
+		var(--secondary);
+	color: var(--secondary-foreground);
+	box-shadow: var(--shadow-sm);
+	overflow: hidden;
+	transform: translateZ(0);
+	transition:
+		transform 0.26s var(--books-ease),
+		box-shadow 0.26s ease;
+}
+
+.book-cover::after {
+	position: absolute;
+	inset: -22% -55%;
+	content: "";
+	background: linear-gradient(
+		100deg,
+		transparent 35%,
+		rgb(255 255 255 / 0.4) 50%,
+		transparent 64%
+	);
+	opacity: 0.75;
+	transform: translateX(-78%) rotate(12deg);
+	transition: transform 0.48s var(--books-ease);
+}
+
+.book-item:hover .book-cover,
+.book-item:focus-within .book-cover {
+	box-shadow: 0 10px 22px rgb(var(--primary-rgb) / 0.18);
+	transform: translateY(-0.1rem) rotate(-1.5deg);
+}
+
+.book-item:hover .book-cover::after,
+.book-item:focus-within .book-cover::after {
+	transform: translateX(78%) rotate(12deg);
+}
+
+.book-cover span {
+	position: relative;
+	z-index: 1;
+	font-family: var(--font-serif);
+	font-size: 1.7rem;
+	font-weight: 700;
+}
+
+.book-copy {
+	min-width: 0;
+}
+
+.book-copy h2 {
+	margin: 0;
+	font-size: 1.12rem;
+	line-height: 1.25;
+}
+
+.book-copy h2 a {
+	color: var(--foreground);
+	transition:
+		color 0.18s ease,
+		text-shadow 0.18s ease;
+}
+
+.book-copy h2 a:hover,
+.book-copy h2 a:focus-visible {
+	color: var(--link-hover);
+	text-shadow: 0 0 18px rgb(var(--primary-rgb) / 0.16);
+}
+
+.book-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem;
+	margin: 0.4rem 0 0;
+	color: var(--muted-foreground);
+	font-family: var(--font-mono);
+	font-size: 0.82rem;
+}
+
+.book-note {
+	margin: 0.72rem 0 0;
+	color: var(--foreground);
+	line-height: 1.55;
+}
+
+.kindle-empty {
+	position: relative;
+	display: grid;
+	place-items: center;
+	min-height: 17rem;
+	padding: 2rem;
+	border: 1px dashed var(--border);
+	border-radius: var(--radius);
+	color: var(--muted-foreground);
+	text-align: center;
+	overflow: hidden;
+}
+
+.kindle-empty::before {
+	position: absolute;
+	inset: 1px;
+	content: "";
+	background: radial-gradient(
+		circle at 50% 32%,
+		rgb(var(--primary-rgb) / 0.12),
+		transparent 42%
+	);
+	opacity: 0.78;
+	pointer-events: none;
+}
+
+.kindle-empty > * {
+	position: relative;
+	z-index: 1;
+}
+
+.kindle-empty .glow-icon {
+	animation: kindle-empty-float 2.8s var(--books-ease) infinite;
+}
+
+.kindle-empty p {
+	margin: 0.85rem 0 0;
+}
+
+.kindle-logo {
+	margin-top: 1.1rem;
+	color: color-mix(in oklch, var(--muted-foreground), transparent 30%);
+	font-family: var(--font-sans);
+	font-size: 0.95rem;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-align: center;
+}
+
+@media screen and (max-width: 640px) {
+	.kindle-device {
+		min-height: 0;
+		padding: 2.55rem 0.72rem 1.05rem;
+		border-radius: 1.25rem;
+	}
+
+	.kindle-screen {
+		min-height: 560px;
+		padding: 1rem;
+	}
+
+	.kindle-toolbar {
+		align-items: flex-start;
+	}
+
+	.book-item {
+		grid-template-columns: 3.45rem minmax(0, 1fr);
+		gap: 0.75rem;
+		padding: 0.72rem;
+	}
+
+	.book-cover span {
+		font-size: 1.35rem;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.kindle-device,
+	.kindle-toolbar,
+	.kindle-tabs,
+	.kindle-panels,
+	.kindle-panel.is-active,
+	.book-item,
+	.kindle-status span,
+	.kindle-empty .glow-icon,
+	.kindle-screen::before {
+		animation: none !important;
+	}
+
+	.kindle-device,
+	.kindle-tabs::before,
+	.kindle-tab,
+	.book-item,
+	.book-cover,
+	.book-cover::after,
+	.book-copy h2 a {
+		transition-duration: 0.01ms !important;
+	}
+
+	.kindle-device:hover,
+	.book-item:hover,
+	.book-item:focus-within,
+	.book-item:hover .book-cover,
+	.book-item:focus-within .book-cover {
+		transform: none;
+	}
+}
+
+@keyframes kindle-device-in {
+	from {
+		opacity: 0;
+		transform: translateY(1.4rem) rotateX(3deg) scale(0.985);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0) rotateX(0deg) scale(1);
+	}
+}
+
+@keyframes kindle-content-in {
+	from {
+		opacity: 0;
+		transform: translateY(0.5rem);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes kindle-screen-scan {
+	0%,
+	58% {
+		opacity: 0;
+		transform: translateY(-56%);
+	}
+
+	66% {
+		opacity: 1;
+	}
+
+	86%,
+	100% {
+		opacity: 0;
+		transform: translateY(56%);
+	}
+}
+
+@keyframes kindle-status-pulse {
+	0%,
+	100% {
+		transform: scaleY(0.72);
+	}
+
+	45% {
+		transform: scaleY(1);
+	}
+}
+
+@keyframes kindle-panel-in {
+	from {
+		opacity: 0;
+		transform: translateY(0.35rem);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes book-item-in {
+	from {
+		opacity: 0;
+		transform: translateY(0.65rem);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes kindle-empty-float {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+
+	50% {
+		transform: translateY(-0.38rem);
+	}
+}

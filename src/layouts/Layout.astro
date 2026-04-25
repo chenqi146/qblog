@@ -22,12 +22,24 @@ interface Props {
 
 const { title, description, image, pagefindIgnore, article } = Astro.props;
 const defaultOgImage = new URL(withBase("img/og.png"), Astro.site).toString();
-const ogImage = image?.src ? new URL(image.src, Astro.site).toString() : defaultOgImage;
+const ogImage = image?.src
+	? new URL(image.src, Astro.site).toString()
+	: defaultOgImage;
 ---
 
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
 	<head>
+		<script is:inline>
+			try {
+				const storedTheme = window.localStorage.getItem("qblog-theme");
+				if (storedTheme === "light" || storedTheme === "dark") {
+					document.documentElement.dataset.theme = storedTheme;
+				}
+			} catch {
+				document.documentElement.dataset.theme = "dark";
+			}
+		</script>
 		<link
 			rel="preload"
 			href={withBase("fonts/Geist.woff2")}
@@ -50,7 +62,7 @@ const ogImage = image?.src ? new URL(image.src, Astro.site).toString() : default
 
 		<title>{title}</title>
 		{description && <meta name="description" content={description} />}
-		<meta name="theme-color" content={themeColor}>
+		<meta name="theme-color" content={themeColor} />
 
 		<link rel="canonical" href={Astro.url} />
 

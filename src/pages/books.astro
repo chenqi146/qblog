@@ -1,0 +1,201 @@
+---
+import "../styles/books.css";
+
+import { getCollection } from "astro:content";
+import Card from "../components/Card.astro";
+import Icon from "../components/Icon.astro";
+import Layout from "../layouts/Layout.astro";
+import { withBase } from "../lib/base";
+
+const books = await getCollection("books");
+const dateFormatter = new Intl.DateTimeFormat("zh-CN", {
+	year: "numeric",
+	month: "2-digit",
+	day: "2-digit",
+});
+
+const readBooks = books
+	.filter((book) => book.data.status === "read")
+	.sort(
+		(a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0),
+	);
+const wantBooks = books.filter((book) => book.data.status === "want");
+
+const shelves = [
+	{
+		id: "read",
+		label: "我看过的书",
+		eyebrow: "Read",
+		books: readBooks,
+		empty: "这里还没有已读记录。",
+	},
+	{
+		id: "want",
+		label: "我想看的书",
+		eyebrow: "Want",
+		books: wantBooks,
+		empty: "还没有添加想看的书。",
+	},
+];
+---
+
+<Layout title="书单" description="我看过和想看的书。">
+	<div class="layout-grid-left" slot="left">
+		<Card class="flex-col-card">
+			<div class="header-container">
+				<Icon
+					type="lucide"
+					name="library"
+					width={24}
+					height={24}
+					class="glow-icon"
+				/>
+				<h2>书单</h2>
+			</div>
+			<ul class="overview-list book-stats">
+				<li>
+					<span>看过</span>
+					<strong>{readBooks.length}</strong>
+				</li>
+				<li>
+					<span>想看</span>
+					<strong>{wantBooks.length}</strong>
+				</li>
+			</ul>
+		</Card>
+	</div>
+
+	<div class="layout-grid-right" slot="right">
+		<section class="kindle-stage" aria-labelledby="books-title">
+			<div class="kindle-device">
+				<div class="kindle-speaker" aria-hidden="true"></div>
+				<div class="kindle-screen">
+					<header class="kindle-toolbar">
+						<div>
+							<p class="kindle-kicker">Kindle Library</p>
+							<h1 id="books-title">我的书架</h1>
+						</div>
+						<div class="kindle-status" aria-hidden="true">
+							<span></span>
+							<span></span>
+							<span></span>
+						</div>
+					</header>
+
+					<div class="kindle-tabs" role="tablist" aria-label="书单分类" data-active="read">
+						{
+							shelves.map((shelf, index) => (
+								<button
+									type="button"
+									class:list={["kindle-tab", index === 0 && "is-active"]}
+									role="tab"
+									aria-selected={index === 0 ? "true" : "false"}
+									aria-controls={`book-panel-${shelf.id}`}
+									id={`book-tab-${shelf.id}`}
+									data-book-tab={shelf.id}
+								>
+									{shelf.label}
+								</button>
+							))
+						}
+					</div>
+
+					<div class="kindle-panels">
+						{
+							shelves.map((shelf, index) => (
+								<section
+									class:list={["kindle-panel", index === 0 && "is-active"]}
+									id={`book-panel-${shelf.id}`}
+									role="tabpanel"
+									aria-labelledby={`book-tab-${shelf.id}`}
+									data-book-panel={shelf.id}
+									hidden={index !== 0}
+								>
+									<div class="shelf-heading">
+										<span>{shelf.eyebrow}</span>
+										<strong>{shelf.books.length} 本</strong>
+									</div>
+
+									{ shelf.books.length > 0 ? (
+										<ol class="book-list">
+											{shelf.books.map((book, bookIndex) => (
+												<li class="book-item" style={`--book-index: ${bookIndex};`}>
+													<div class="book-cover" aria-hidden="true">
+														<span>{book.data.title.slice(0, 1)}</span>
+													</div>
+													<div class="book-copy">
+														<h2>
+															{book.data.link ? (
+																<a href={withBase(book.data.link)}>
+																	{book.data.title}
+																</a>
+															) : (
+																book.data.title
+															)}
+														</h2>
+														<p class="book-meta">
+															{book.data.author && <span>{book.data.author}</span>}
+															{book.data.date && (
+																<>
+																	<span>/</span>
+																	<time datetime={book.data.date.toISOString()}>
+																		{dateFormatter.format(book.data.date)}
+																	</time>
+																</>
+															)}
+														</p>
+														{book.data.note && <p class="book-note">{book.data.note}</p>}
+													</div>
+												</li>
+											))}
+										</ol>
+									) : (
+										<div class="kindle-empty">
+											<Icon
+												type="lucide"
+												name="bookmark"
+												width={28}
+												height={28}
+												class="glow-icon"
+											/>
+											<p>{shelf.empty}</p>
+										</div>
+									)}
+								</section>
+							))
+						}
+					</div>
+				</div>
+				<div class="kindle-logo" aria-hidden="true">kindle</div>
+			</div>
+		</section>
+	</div>
+</Layout>
+
+<script>
+	const tabs = document.querySelectorAll<HTMLButtonElement>("[data-book-tab]");
+	const panels = document.querySelectorAll<HTMLElement>("[data-book-panel]");
+
+	tabs.forEach((tab) => {
+		tab.addEventListener("click", () => {
+			const target = tab.dataset.bookTab;
+			if (!target) {
+				return;
+			}
+
+			tab.closest<HTMLElement>(".kindle-tabs")?.setAttribute("data-active", target);
+
+			tabs.forEach((item) => {
+				const isActive = item === tab;
+				item.classList.toggle("is-active", isActive);
+				item.setAttribute("aria-selected", isActive ? "true" : "false");
+			});
+
+			panels.forEach((panel) => {
+				const isActive = panel.dataset.bookPanel === target;
+				panel.classList.toggle("is-active", isActive);
+				panel.hidden = !isActive;
+			});
+		});
+	});
+</script>

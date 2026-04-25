@@ -1,7 +1,7 @@
 ---
 import { name } from "spectre:globals";
-import Icon from "./Icon.astro";
 import { stripBase, withBase } from "../lib/base";
+import Icon from "./Icon.astro";
 
 const path = stripBase(Astro.url.pathname);
 const pagefindPath = withBase("pagefind/pagefind.js");
@@ -18,6 +18,10 @@ const pagefindPath = withBase("pagefind/pagefind.js");
     </li>
     <li class="nav-separator">/</li>
     <li>
+      <a href={withBase("books/")} class:list={{ active: path.startsWith('/books') }}>书单</a>
+    </li>
+    <li class="nav-separator">/</li>
+    <li>
       <a href={withBase("projects/")} class:list={{ active: path.startsWith('/projects') }}>项目</a>
     </li>
     <li class="nav-separator">/</li>
@@ -26,6 +30,10 @@ const pagefindPath = withBase("pagefind/pagefind.js");
       <div id="search-results"></div>
     </li>
   </ul>
+  <button class="theme-toggle" type="button" aria-label="切换到浅色模式" data-theme-toggle>
+    <Icon type="lucide" name="sun" width={20} height={20} class="theme-icon theme-icon-sun" />
+    <Icon type="lucide" name="moon" width={20} height={20} class="theme-icon theme-icon-moon" />
+  </button>
   <button class="mobile-nav-toggle" aria-label="移动端菜单">
     <Icon type="lucide" name="menu" width={24} height={24} class="menu-closed" />
     <Icon type="lucide" name="x" width={24} height={24} class="menu-open" />
@@ -35,8 +43,45 @@ const pagefindPath = withBase("pagefind/pagefind.js");
   const searchElement = document.querySelector('#search');
   const results = document.querySelector('#search-results');
   const navToggle = document.querySelector('.mobile-nav-toggle');
+  const themeToggle = document.querySelector('[data-theme-toggle]');
+  const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+  const themeColors = {
+    dark: '#1c2a1f',
+    light: '#f8f5f0',
+  };
 
   let focusIndex = -1;
+
+  const updateThemeControl = () => {
+    const theme = document.documentElement.dataset.theme === 'light' ? 'light' : 'dark';
+    const nextThemeText = theme === 'dark' ? '浅色' : '暗色';
+
+    themeToggle?.setAttribute('aria-label', `切换到${nextThemeText}模式`);
+    themeToggle?.setAttribute('title', `切换到${nextThemeText}模式`);
+    themeColorMeta?.setAttribute('content', themeColors[theme]);
+  };
+
+  const setTheme = (theme) => {
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+    updateThemeControl();
+    window.dispatchEvent(new CustomEvent('qblog-theme-change', { detail: { theme } }));
+  };
+
+  themeToggle?.addEventListener('click', () => {
+    const currentTheme = document.documentElement.dataset.theme === 'light' ? 'light' : 'dark';
+    const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+    try {
+      window.localStorage.setItem('qblog-theme', nextTheme);
+    } catch {
+      // localStorage can be unavailable in private or restricted contexts.
+    }
+
+    setTheme(nextTheme);
+  });
+
+  updateThemeControl();
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'k' && e.ctrlKey) {
@@ -160,14 +205,16 @@ const pagefindPath = withBase("pagefind/pagefind.js");
   }
 
   document.addEventListener('DOMContentLoaded', handleTabletChange);
-  document.addEventListener('resize', handleTabletChange);
+  window.addEventListener('resize', handleTabletChange);
 </script>
 <style>
   nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
-    font-family: 'Geist Mono', 'Courier New', Courier, monospace;
+    gap: 1rem;
+    color: var(--foreground);
+    font-family: var(--font-mono);
     z-index: 50;
   }
 
@@ -176,6 +223,7 @@ const pagefindPath = withBase("pagefind/pagefind.js");
     text-decoration: none;
     font-size: 1.25em;
     z-index: 2;
+    margin-right: auto;
   }
 
   nav ul {
@@ -195,10 +243,12 @@ const pagefindPath = withBase("pagefind/pagefind.js");
     color: inherit;
     text-decoration: none;
     padding: .25rem .5rem;
+    border-radius: calc(var(--radius) * 0.75);
   }
 
   nav a:hover, nav a:focus-visible, nav a.active {
     background-color: var(--primary);
+    color: var(--primary-foreground);
     outline: none;
   }
 
@@ -208,42 +258,78 @@ const pagefindPath = withBase("pagefind/pagefind.js");
     outline: none;
     padding: .25rem .5rem;
     width: 160px;
+    color: var(--foreground);
+    border-radius: calc(var(--radius) * 0.75);
   }
 
   #search::placeholder {
-    color: white;
+    color: var(--muted-foreground);
   }
 
   #search:focus {
     background-color: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  #search:focus::placeholder {
+    color: color-mix(in oklch, var(--primary-foreground), transparent 22%);
   }
 
   #search-results {
     position: absolute;
     top: calc(100% + .5rem);
     right: 0;
-    background-color: #252525;
+    background-color: var(--popover);
     border: 1px solid var(--primary);
     display: none;
     width: 200%;
     z-index: 10;
     padding: .5rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
   }
 
   #search-results.active:has(*) {
     display: block;
   }
 
+  .theme-toggle,
   .mobile-nav-toggle {
-    display: none;
     width: 40px;
     height: 40px;
-    background-color: #121212;
-    border: 1px solid #353535;
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--foreground);
     align-items: center;
     justify-content: center;
     cursor: pointer;
     z-index: 2;
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease,
+      color 0.15s ease,
+      transform 0.15s ease;
+  }
+
+  .theme-toggle {
+    display: flex;
+    flex: 0 0 auto;
+  }
+
+  .mobile-nav-toggle {
+    display: none;
+  }
+
+  .theme-toggle:hover,
+  .theme-toggle:focus-visible,
+  .mobile-nav-toggle:hover,
+  .mobile-nav-toggle:focus-visible {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    color: var(--primary-foreground);
+    outline: none;
+    transform: translateY(-1px);
   }
 
   .menu-open {
@@ -260,9 +346,21 @@ const pagefindPath = withBase("pagefind/pagefind.js");
 
   @media screen and (max-width: 640px) {
     nav {
+      width: 100vw;
+      max-width: 100vw;
+      margin-inline: calc(50% - 50vw);
       padding: 0 1rem;
       padding-top: 1rem;
       transition: all .25s ease;
+      gap: 0.75rem;
+    }
+
+    .site-title {
+      margin-right: 0;
+    }
+
+    .theme-toggle {
+      margin-left: auto;
     }
 
     .mobile-nav-toggle {
@@ -291,20 +389,20 @@ const pagefindPath = withBase("pagefind/pagefind.js");
     }
 
     nav.active {
-      background-color: #181818;
+      background-color: var(--background);
     }
 
     nav.active ul {
       opacity: 1;
       pointer-events: all;
-      background-color: #181818;
+      background-color: var(--background);
     }
 
     nav ul li {
       position: relative;
       transition: all .25s ease-out;
       top: -1.5rem;
-      border-bottom: 1px solid #353535;
+      border-bottom: 1px solid var(--border);
       width: 100%;
       max-width: none;
       padding: 0;
@@ -319,7 +417,7 @@ const pagefindPath = withBase("pagefind/pagefind.js");
     }
 
     nav ul li:first-child {
-      border-top: 1px solid #353535;
+      border-top: 1px solid var(--border);
     }
 
     nav.active ul li {
@@ -340,21 +438,35 @@ const pagefindPath = withBase("pagefind/pagefind.js");
   }
 </style>
 <style is:global>
+  .theme-icon-moon {
+    display: none;
+  }
+
+  html[data-theme="light"] .theme-icon-sun {
+    display: none;
+  }
+
+  html[data-theme="light"] .theme-icon-moon {
+    display: block;
+  }
+
   #search-results a {
     display: block;
     text-decoration: none;
-    color: white !important;
+    color: var(--popover-foreground) !important;
     padding: .5rem;
+    border-radius: calc(var(--radius) * 0.75);
   }
 
   #search-results a:hover, #search-results a:focus-visible {
     background-color: var(--primary);
+    color: var(--primary-foreground) !important;
     outline: none;
   }
 
   #search-results a:hover mark, #search-results a:focus-visible mark {
-    background-color: #ffffff;
-    color: #000000;
+    background-color: var(--primary-foreground);
+    color: var(--primary);
   }
 
   #search-results a h3 {
@@ -370,13 +482,13 @@ const pagefindPath = withBase("pagefind/pagefind.js");
 
   #search-results mark {
     background-color: var(--primary);
-    color: white;
+    color: var(--primary-foreground);
   }
 
   .separator {
     margin: .5rem .5rem;
     border: none;
     height: 1px;
-    background-color: #353535;
+    background-color: var(--border);
   }
 </style>

@@ -1,9 +1,9 @@
 ---
 import "../styles/index.css";
 
-import heroImage from "../content/assets/unsplash/us-hero-landscape.jpg";
 import Card from "../components/Card.astro";
 import Icon from "../components/Icon.astro";
+import heroImage from "../content/assets/unsplash/us-hero-landscape.jpg";
 import Layout from "../layouts/Layout.astro";
 
 const startDate = new Date(2025, 9, 17);
@@ -215,11 +215,11 @@ const startDateText = new Intl.DateTimeFormat("zh-CN", {
 	.sidebar-copy {
 		margin: 0;
 		line-height: 1.6;
-		color: #c7c7c7;
+		color: var(--muted-foreground);
 	}
 
 	.sidebar-copy strong {
-		color: white;
+		color: var(--foreground);
 		font-weight: 600;
 	}
 
@@ -236,7 +236,7 @@ const startDateText = new Intl.DateTimeFormat("zh-CN", {
 		align-items: flex-start;
 		gap: 0.35rem;
 		padding-bottom: 0.85rem;
-		border-bottom: 1px solid #353535;
+		border-bottom: 1px solid var(--border);
 		margin-bottom: 0;
 	}
 
@@ -248,13 +248,13 @@ const startDateText = new Intl.DateTimeFormat("zh-CN", {
 	.relationship-stats span,
 	.memory-label,
 	.memory-date {
-		font-family: "Geist Mono", "Courier New", Courier, monospace;
+		font-family: var(--font-mono);
 		font-size: 0.88rem;
-		color: #c7c7c7;
+		color: var(--muted-foreground);
 	}
 
 	.relationship-stats strong {
-		color: white;
+		color: var(--foreground);
 		font-size: 1rem;
 	}
 
@@ -269,22 +269,23 @@ const startDateText = new Intl.DateTimeFormat("zh-CN", {
 		flex-direction: column;
 		gap: 0.45rem;
 		padding: 1rem;
-		border: 1px solid #353535;
-		background-color: rgba(255, 255, 255, 0.02);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		background-color: var(--soft-surface);
 	}
 
 	.memory-card-hero {
 		grid-column: 1 / -1;
 		background:
-			linear-gradient(135deg, rgba(var(--primary-rgb), 0.14), transparent 42%),
-			rgba(255, 255, 255, 0.02);
+			linear-gradient(135deg, rgb(var(--primary-rgb) / 0.14), transparent 42%),
+			var(--soft-surface);
 	}
 
 	.memory-hero-image-wrap {
 		margin: -1rem -1rem 0;
 		overflow: hidden;
-		border-bottom: 1px solid #353535;
-		background: #0f0f0f;
+		border-bottom: 1px solid var(--border);
+		background: var(--muted);
 	}
 
 	.memory-hero-image {
@@ -301,7 +302,7 @@ const startDateText = new Intl.DateTimeFormat("zh-CN", {
 	}
 
 	.memory-date {
-		color: white;
+		color: var(--foreground);
 	}
 
 	.memory-card h3 {
@@ -311,7 +312,7 @@ const startDateText = new Intl.DateTimeFormat("zh-CN", {
 	.memory-emphasis,
 	.memory-metric,
 	.memory-metric-small {
-		color: white;
+		color: var(--foreground);
 		font-weight: 600;
 		line-height: 1.2;
 	}
